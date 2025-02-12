@@ -4,12 +4,12 @@ import com.viktor.oop.bookstore.dto.BookDto;
 import com.viktor.oop.bookstore.model.Book;
 import com.viktor.oop.bookstore.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/book")
@@ -24,18 +24,26 @@ public class BookController {
 
     @GetMapping("/author/{author}")
     public ResponseEntity<List<Book>> getBookByAuthor(@PathVariable String author) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookByAuthor(author));
+        return ResponseEntity.ok().body(bookService.getBookByAuthor(author));
     }
 
     @GetMapping("/title/{title}")
     public ResponseEntity<List<Book>> getBookByTitle(@PathVariable String title) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookByTitle(title));
+        return ResponseEntity.ok().body(bookService.getBookByTitle(title));
     }
 
     @PostMapping()
     public ResponseEntity<Book> postBook(@RequestBody BookDto bookDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookService.addBook(bookDto));
+        return ResponseEntity.ok().body(bookService.addBook(bookDto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable UUID id) {
+        return bookService.removeBook(id)
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
 
 
 }

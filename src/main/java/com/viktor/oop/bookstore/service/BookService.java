@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +30,9 @@ public class BookService {
 
     public List<Book> getBookByTitle(String title) {
         return bookRepository.findBookByTitle(title);
+    }
+
+    public boolean removeBook(UUID id) {
+        return bookRepository.removeBook(id);
     }
 }
