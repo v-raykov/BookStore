@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ModelMapperConfig {
     private static final ModelMapper modelMapper = new ModelMapper();
+
     @Bean
     public ModelMapper modelMapper() {
         modelMapper.addConverter(new DtoToBookConverter());

@@ -15,6 +15,10 @@ public class InMemoryBookRepository implements BookRepository {
         return book;
     }
 
+    public Book getBookByIsbn(UUID isbn) {
+        return books.get(isbn);
+    }
+
     public boolean removeBook(UUID isbn) {
         return books.remove(isbn) != null;
     }
@@ -34,6 +38,4 @@ public class InMemoryBookRepository implements BookRepository {
     public List<Book> getAllBooks() {
         return new ArrayList<>(books.values());
     }
-
-
 }

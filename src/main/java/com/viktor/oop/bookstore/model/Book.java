@@ -1,15 +1,17 @@
 package com.viktor.oop.bookstore.model;
 
-import com.viktor.oop.bookstore.dto.BookDto;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Book {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private UUID isbn;
 
     private String title;

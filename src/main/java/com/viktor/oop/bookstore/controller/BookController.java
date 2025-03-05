@@ -22,6 +22,11 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook());
     }
 
+    @GetMapping({"/{id}"})
+    public ResponseEntity<Book> getBook(@PathVariable UUID id) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookByIsbn(id));
+    }
+
     @GetMapping("/author/{author}")
     public ResponseEntity<List<Book>> getBookByAuthor(@PathVariable String author) {
         return ResponseEntity.ok().body(bookService.getBookByAuthor(author));
@@ -35,6 +40,11 @@ public class BookController {
     @PostMapping()
     public ResponseEntity<Book> postBook(@RequestBody BookDto bookDto) {
         return ResponseEntity.ok().body(bookService.addBook(bookDto));
+    }
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Book>> postBookBulk(@RequestBody List<BookDto> bookDtos) {
+        return ResponseEntity.ok().body(bookService.addBookBulk(bookDtos));
     }
 
     @DeleteMapping("/{id}")

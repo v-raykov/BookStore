@@ -11,4 +11,5 @@ public interface BookRepository {
     List<Book> findBookByTitle(String title);
     List<Book> findBookByAuthor(String author);
     List<Book> getAllBooks();
+    Book getBookByIsbn(UUID isbn);
 }
