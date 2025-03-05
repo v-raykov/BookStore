@@ -58,5 +58,4 @@ public class BookController {
     public void switchRepository(@PathVariable Boolean useDb) {
         bookService.switchRepository(useDb);
     }
-
 }
