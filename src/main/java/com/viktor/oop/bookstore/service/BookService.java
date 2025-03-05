@@ -2,7 +2,10 @@ package com.viktor.oop.bookstore.service;
 
 import com.viktor.oop.bookstore.dto.BookDto;
 import com.viktor.oop.bookstore.model.Book;
+import com.viktor.oop.bookstore.repository.BookRepository;
 import com.viktor.oop.bookstore.repository.DatabaseBookRepository;
+import com.viktor.oop.bookstore.repository.InMemoryBookRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,7 +18,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BookService {
-    private final DatabaseBookRepository bookRepository;
+    private final DatabaseBookRepository databaseBookRepository;
+    private final InMemoryBookRepository inMemoryBookRepository;
+    private BookRepository bookRepository;
     private final ModelMapper modelMapper;
 
     public List<Book> getBook() {
@@ -49,4 +54,12 @@ public class BookService {
         return bookRepository.removeBook(id);
     }
 
+    public void switchRepository(boolean useDb) {
+        bookRepository = useDb ? databaseBookRepository : inMemoryBookRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        bookRepository = databaseBookRepository;
+    }
 }

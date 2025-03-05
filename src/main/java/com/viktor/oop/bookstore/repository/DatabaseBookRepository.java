@@ -1,6 +1,7 @@
 package com.viktor.oop.bookstore.repository;
 
 import com.viktor.oop.bookstore.model.Book;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
+@Primary
 public interface DatabaseBookRepository extends BookRepository, JpaRepository<Book, UUID> {
     @Override
     default Book addBook(Book book) {

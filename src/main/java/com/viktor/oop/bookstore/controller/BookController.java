@@ -54,6 +54,9 @@ public class BookController {
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-
+    @PutMapping("/db/{useDb}")
+    public void switchRepository(@PathVariable Boolean useDb) {
+        bookService.switchRepository(useDb);
+    }
 
 }
