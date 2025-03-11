@@ -1,6 +1,6 @@
 package com.viktor.oop.bookstore.controller;
 
-import com.viktor.oop.bookstore.dto.BookDto;
+import com.viktor.oop.bookstore.model.dto.BookDto;
 import com.viktor.oop.bookstore.model.Book;
 import com.viktor.oop.bookstore.service.BookService;
 import lombok.RequiredArgsConstructor;

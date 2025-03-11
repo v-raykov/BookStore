@@ -13,21 +13,39 @@
 
     <modules>
         <module>backend</module>
-        <module>frontend</module> <!-- Defines your backend module -->
+        <module>frontend</module>
+        <module>launcher</module> <!-- Defines your backend module -->
     </modules>
 
     <properties>
         <java.version>23</java.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <!-- This section is optional: it ensures consistent dependency versions across modules -->
-        </dependencies>
-    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.36</version> <!-- Explicitly add Lombok version here -->
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

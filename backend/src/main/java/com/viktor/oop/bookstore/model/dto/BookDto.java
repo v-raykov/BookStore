@@ -1,4 +1,4 @@
-package com.viktor.oop.bookstore.dto;
+package com.viktor.oop.bookstore.model.dto;
 
 import lombok.Data;
 

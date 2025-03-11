@@ -1,6 +1,6 @@
 package com.viktor.oop.bookstore.service;
 
-import com.viktor.oop.bookstore.dto.BookDto;
+import com.viktor.oop.bookstore.model.dto.BookDto;
 import com.viktor.oop.bookstore.model.Book;
 import com.viktor.oop.bookstore.repository.BookRepository;
 import com.viktor.oop.bookstore.repository.DatabaseBookRepository;

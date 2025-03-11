@@ -5,7 +5,7 @@ import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Component;
 
-import com.viktor.oop.bookstore.dto.BookDto;
+import com.viktor.oop.bookstore.model.dto.BookDto;
 import com.viktor.oop.bookstore.model.Book;
 
 import java.util.UUID;
