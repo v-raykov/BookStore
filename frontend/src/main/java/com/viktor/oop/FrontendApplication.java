@@ -1,6 +1,6 @@
 package com.viktor.oop;
 
-import com.viktor.oop.gui.MainFrame;
+import com.viktor.oop.gui.main.MainFrame;
 
 import javax.swing.*;
 
