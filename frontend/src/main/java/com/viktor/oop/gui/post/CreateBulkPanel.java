@@ -28,7 +28,7 @@ public class CreateBulkPanel extends JPanel {
     }
 
     private JPanel getButtonPanel() {
-        var buttonPanel = new ButtonPanel();
+        var buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.add(button);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         return buttonPanel;
@@ -36,7 +36,7 @@ public class CreateBulkPanel extends JPanel {
 
     private JButton getButton() {
         var button = new JButton();
-        button.setText("Create");
+        button.setText("Create (via JSON list)");
         button.addActionListener(_ -> createBooks());
         return button;
     }
