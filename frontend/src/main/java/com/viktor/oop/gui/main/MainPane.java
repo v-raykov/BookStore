@@ -1,6 +1,7 @@
 package com.viktor.oop.gui.main;
 
 import com.viktor.oop.gui.all.AllBooksPanel;
+import com.viktor.oop.gui.all.SearchPanel;
 import com.viktor.oop.gui.single.BookInfoPanel;
 
 import javax.swing.*;
@@ -8,8 +9,13 @@ import javax.swing.*;
 public class MainPane extends JSplitPane {
     public MainPane() {
         super(JSplitPane.HORIZONTAL_SPLIT);
-        setLeftComponent(new AllBooksPanel());
-        setRightComponent(new BookInfoPanel());
+        var allBooksPanel = new AllBooksPanel();
+        var bookInfoPanel = new BookInfoPanel();
+
+        allBooksPanel.setListener(bookInfoPanel::displayBookInfo);
+
+        setLeftComponent(allBooksPanel);
+        setRightComponent(bookInfoPanel);
         configure();
     }
 
