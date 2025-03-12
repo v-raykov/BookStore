@@ -63,8 +63,7 @@ public class BookService {
     }
 
     private HttpResponse<String> getResponse(String query, SearchCriteria criteria) throws IOException, InterruptedException {
-        System.out.println(BASE_URL + getEndpoint(query, criteria));
-        HttpRequest request = HttpRequest.newBuilder()
+        var request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + getEndpoint(query, criteria)))
                 .GET()
                 .build();
@@ -88,19 +87,28 @@ public class BookService {
     }
 
     public boolean getStatus() {
-        HttpRequest request = HttpRequest.newBuilder()
+        var request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL))
                 .timeout(Duration.ofSeconds(1)) // Set request timeout
                 .GET()
                 .build();
         try {
-            HttpClient client = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofSeconds(1)) // Set connection timeout
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.statusCode() == 200;
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString()).statusCode() == 200;
         } catch (Exception e) {
-            return false; // Backend is not ready yet
+            return false;
+        }
+    }
+
+    public void createBooks(String text) {
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/bulk"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(text))
+                .build();
+        try {
+            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

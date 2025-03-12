@@ -1,7 +1,8 @@
 package com.viktor.oop.gui.main;
 
-import com.viktor.oop.gui.books.AllBooksPanel;
-import com.viktor.oop.gui.info.BookInfoPanel;
+import com.viktor.oop.gui.get.AllBooksPanel;
+import com.viktor.oop.gui.get.info.BookInfoPanel;
+import com.viktor.oop.gui.post.CreateBookPanel;
 
 import javax.swing.*;
 
@@ -42,6 +43,7 @@ public class MainPane extends JSplitPane {
 
     private void addComponents(boolean createMode) {
         add(topPanel, BorderLayout.NORTH);
+        allBooksPanel.refresh();
         add(createMode ? createBookPanel : splitPane, BorderLayout.CENTER);
     }
 

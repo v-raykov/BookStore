@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.info;
+package com.viktor.oop.gui.get.info;
 
 import com.viktor.oop.gui.listener.BookDeleteListener;
 import com.viktor.oop.model.Book;

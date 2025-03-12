@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.books;
+package com.viktor.oop.gui.get;
 
 import com.viktor.oop.gui.listener.BookSelectListener;
 import com.viktor.oop.model.Book;
@@ -52,6 +52,10 @@ public class BookPanel extends JScrollPane {
 
     public void switchRepo(boolean useDatabase) {
         bookService.switchRepo(useDatabase);
+        displayBooksByCriteria("_", SearchCriteria.ALL);
+    }
+
+    public void refresh() {
         displayBooksByCriteria("_", SearchCriteria.ALL);
     }
 }

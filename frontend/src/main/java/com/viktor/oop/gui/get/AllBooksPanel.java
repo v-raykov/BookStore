@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.books;
+package com.viktor.oop.gui.get;
 
 import com.viktor.oop.gui.listener.BookSelectListener;
 
@@ -7,12 +7,12 @@ import java.awt.*;
 import java.util.UUID;
 
 public class AllBooksPanel extends JPanel {
-    private final BookPanel bookPanel;
+    private BookPanel bookPanel;
 
     public AllBooksPanel() {
         setLayout(new BorderLayout());
 
-        SearchPanel searchPanel = new SearchPanel();
+        var searchPanel = new SearchPanel();
         bookPanel = new BookPanel();
 
         add(searchPanel, BorderLayout.NORTH);
@@ -31,5 +31,9 @@ public class AllBooksPanel extends JPanel {
 
     public void switchRepo(boolean useDatabase) {
         bookPanel.switchRepo(useDatabase);
+    }
+
+    public void refresh() {
+        bookPanel.refresh();
     }
 }

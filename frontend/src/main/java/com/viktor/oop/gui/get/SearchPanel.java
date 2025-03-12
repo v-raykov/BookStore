@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.books;
+package com.viktor.oop.gui.get;
 
 import com.viktor.oop.gui.listener.SearchListener;
 import com.viktor.oop.service.SearchCriteria;
@@ -53,7 +53,7 @@ public class SearchPanel extends JPanel {
 
     private void performSearch() {
         if (listener != null) {
-            listener.onSearch(searchField.getText().trim(), (SearchCriteria) criteriaBox.getSelectedItem());
+            listener.searchBooks(searchField.getText().trim(), (SearchCriteria) criteriaBox.getSelectedItem());
         }
     }
 

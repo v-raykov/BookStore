@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.books;
+package com.viktor.oop.gui.get;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.books;
+package com.viktor.oop.gui.get;
 
 import com.viktor.oop.gui.listener.BookSelectListener;
 import com.viktor.oop.model.Book;
@@ -33,7 +33,7 @@ public class GridPanel extends JPanel {
 
     private void notifyListener(Book book) {
         if (listener != null) {
-            listener.onBookSelected(book);
+            listener.selectBook(book);
         }
     }
 
