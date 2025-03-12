@@ -13,6 +13,7 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 
 public class BookService {
@@ -33,6 +34,18 @@ public class BookService {
             return getBooks(response.body());
         } else {
             throw new IOException("API Error: " + response.statusCode());
+        }
+    }
+
+    public void deleteBookByIsbn(UUID id) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/" + id.toString()))
+                .DELETE()
+                .build();
+        try {
+            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

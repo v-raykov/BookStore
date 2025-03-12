@@ -1,10 +1,20 @@
 package com.viktor.oop.gui.single;
 
+import com.viktor.oop.gui.listener.BookDeleteListener;
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.UUID;
 
 public class ButtonPanel extends JPanel {
     private final JButton button;
+
+    @Setter
+    private UUID selectedBookIsbn;
+
+    @Setter
+    private BookDeleteListener deleteListener;
 
     public ButtonPanel() {
         super(new BorderLayout());
@@ -21,6 +31,11 @@ public class ButtonPanel extends JPanel {
     private JButton getButton() {
         var button = new JButton("Delete");
         button.setPreferredSize(new Dimension(0, 60));
+        button.addActionListener(_ -> {
+            if (deleteListener != null) {
+                deleteListener.deleteBook(selectedBookIsbn);
+            }
+        });
         return button;
     }
 }

@@ -8,6 +8,7 @@ import com.viktor.oop.service.SearchCriteria;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public class BookPanel extends JScrollPane {
     private final BookService bookService;
@@ -40,7 +41,12 @@ public class BookPanel extends JScrollPane {
         }
     }
 
-    public void setListener(BookSelectListener listener) {
+    public void setSelectListener(BookSelectListener listener) {
         gridPanel.setListener(listener);
+    }
+
+    public void deleteBook(UUID isbn) {
+        bookService.deleteBookByIsbn(isbn);
+        displayBooksByCriteria("_", SearchCriteria.ALL);
     }
 }

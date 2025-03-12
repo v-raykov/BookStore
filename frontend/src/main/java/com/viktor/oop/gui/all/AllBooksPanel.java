@@ -1,12 +1,11 @@
 package com.viktor.oop.gui.all;
 
 import com.viktor.oop.gui.listener.BookSelectListener;
-import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.UUID;
 
-@Setter
 public class AllBooksPanel extends JPanel {
     private final BookPanel bookPanel;
 
@@ -22,7 +21,11 @@ public class AllBooksPanel extends JPanel {
         searchPanel.setListener(bookPanel::displayBooksByCriteria);
     }
 
-    public void setListener(BookSelectListener listener) {
-        bookPanel.setListener(listener);
+    public void setSelectListener(BookSelectListener listener) {
+        bookPanel.setSelectListener(listener);
+    }
+
+    public void deleteBook(UUID isbn) {
+        bookPanel.deleteBook(isbn);
     }
 }

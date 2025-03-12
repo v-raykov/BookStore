@@ -1,7 +1,6 @@
 package com.viktor.oop.gui.main;
 
 import com.viktor.oop.gui.all.AllBooksPanel;
-import com.viktor.oop.gui.all.SearchPanel;
 import com.viktor.oop.gui.single.BookInfoPanel;
 
 import javax.swing.*;
@@ -12,7 +11,8 @@ public class MainPane extends JSplitPane {
         var allBooksPanel = new AllBooksPanel();
         var bookInfoPanel = new BookInfoPanel();
 
-        allBooksPanel.setListener(bookInfoPanel::displayBookInfo);
+        allBooksPanel.setSelectListener(bookInfoPanel::displayBookInfo);
+        bookInfoPanel.setDeleteListener(allBooksPanel::deleteBook);
 
         setLeftComponent(allBooksPanel);
         setRightComponent(bookInfoPanel);

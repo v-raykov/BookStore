@@ -6,7 +6,6 @@ import com.viktor.oop.bookstore.repository.BookRepository;
 import com.viktor.oop.bookstore.repository.DatabaseBookRepository;
 import com.viktor.oop.bookstore.repository.InMemoryBookRepository;
 import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,6 @@ public class BookService {
         return bookRepository.addBook(modelMapper.map(bookDto, Book.class));
     }
 
-    @Transactional
     public List<Book> addBookBulk(List<BookDto> bookDtos) {
         return bookDtos.stream()
                 .map(this::addBook)

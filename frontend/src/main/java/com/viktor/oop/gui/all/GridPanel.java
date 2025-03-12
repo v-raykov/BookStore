@@ -23,7 +23,6 @@ public class GridPanel extends JPanel {
         refreshUI();
     }
 
-
     private void addBookButtons(List<Book> books) {
         for (Book book : books) {
             add(createBookButton(book));
@@ -31,10 +30,13 @@ public class GridPanel extends JPanel {
     }
 
     private JButton createBookButton(Book book) {
-        var button = new JButton(book.getTitle());
+        var button = new JButton("<html><center>" + book.getTitle() + "</center></html>");
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
         button.addActionListener(_ -> notifyListener(book));
         return button;
     }
+
 
     private void notifyListener(Book book) {
         if (listener != null) {
