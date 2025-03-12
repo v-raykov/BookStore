@@ -1,39 +1,40 @@
 package com.viktor.oop.gui.all;
 
+import com.viktor.oop.service.SearchCriteria;
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class SearchPanel extends JPanel {
     private final JTextField searchField;
-    private final JComboBox<String> criteriaBox;
+    private final JComboBox<SearchCriteria> criteriaBox;
     private final JButton searchButton;
+    @Setter
+    private SearchListener listener;
 
     public SearchPanel() {
         setLayout(new BorderLayout());
         searchField = new JTextField(30);
-        criteriaBox = new JComboBox<>(new String[]{"All", "Title", "Author", "Category"});
+        criteriaBox = new JComboBox<>(SearchCriteria.values());
         searchButton = new JButton("Search");
 
         // Search button action
-        searchButton.addActionListener(_ -> {
-            String query = searchField.getText().trim();
-            String criteria = (String) criteriaBox.getSelectedItem();
-            performSearch(query, criteria);
-        });
-        add(getSearchPanel(), BorderLayout.NORTH);
+        searchButton.addActionListener(_ -> performSearch());
+        add(getSearchBar(), BorderLayout.NORTH);
     }
 
-    // Dummy search function
-    private void performSearch(String query, String criteria) {
-        System.out.println("Searching for: " + query + " in " + criteria);
-        // logic to filter data from a list or database.
+    private void performSearch() {
+        if (listener != null) {
+            listener.onSearch(searchField.getText().trim(), (SearchCriteria) criteriaBox.getSelectedItem()); // Notify listener
+        }
     }
 
-    private JPanel getSearchPanel() {
-        JPanel searchBarPanel = new JPanel(new FlowLayout());
-        searchBarPanel.add(criteriaBox);
-        searchBarPanel.add(searchField);
-        searchBarPanel.add(searchButton);
-        return searchBarPanel;
+    private JPanel getSearchBar() {
+        var searchBar = new JPanel(new FlowLayout());
+        searchBar.add(criteriaBox);
+        searchBar.add(searchField);
+        searchBar.add(searchButton);
+        return searchBar;
     }
 }

@@ -23,7 +23,7 @@ public class BookController {
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<Book> getBook(@PathVariable UUID id) {
+    public ResponseEntity<Book> getBook(@PathVariable("id") UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookByIsbn(id));
     }
 

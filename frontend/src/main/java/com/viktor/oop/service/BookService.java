@@ -11,6 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -26,32 +27,30 @@ public class BookService {
         objectMapper = new ObjectMapper();
     }
 
-    public List<Book> getBooks() throws IOException, InterruptedException {
+    public List<Book> getBooksByCriteria(String query, SearchCriteria criteria) throws IOException, InterruptedException {
+        System.out.println(BASE_URL + getEndpoint(query, criteria));
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
+                .uri(URI.create(BASE_URL + getEndpoint(query, criteria)))
                 .GET()
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() == 200) {
-            return objectMapper.readValue(response.body(), new TypeReference<>() {
-            });
+            if (objectMapper.readTree(response.body()).isArray()) {
+                return objectMapper.readValue(response.body(), new TypeReference<>() {});
+            } else {
+                return Collections.singletonList(objectMapper.readValue(response.body(), new TypeReference<>() {}));
+            }
         } else {
             throw new IOException("API Error: " + response.statusCode());
         }
     }
 
-    public Book getBookByIsbn(String isbn) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/book/" + isbn))
-                .GET()
-                .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 200) {
-            return objectMapper.readValue(response.body(), new TypeReference<>() {
-            });
-        } else {
-            throw new IOException("API Error: " + response.statusCode());
+    private String getEndpoint(String query, SearchCriteria criteria) {
+        var criteriaEndpoint = criteria.getEndpoint();
+        if (criteria != SearchCriteria.ALL) {
+            return String.format("/%s%s%s", criteriaEndpoint, criteriaEndpoint.isEmpty() ? "" : "/", query);
         }
+        return criteria.getEndpoint();
     }
 
     public boolean getStatus() {
