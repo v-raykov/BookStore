@@ -1,5 +1,6 @@
 package com.viktor.oop.gui.main;
 
+import com.viktor.oop.gui.listener.BooksRegimeListener;
 import com.viktor.oop.gui.listener.RepoSwitchListener;
 import lombok.Setter;
 
@@ -8,20 +9,21 @@ import java.awt.*;
 
 public class TopPanel extends JPanel {
     private boolean useDatabase = true;
+    private boolean createMode = false;
 
     @Setter
     private RepoSwitchListener repoSwitchListener;
 
+    @Setter
+    private BooksRegimeListener booksRegimeListener;
+
     public TopPanel() {
         super(new FlowLayout(FlowLayout.LEFT));
         setPreferredSize(new Dimension(0, 40));
-
         var repoButton = createRepoButton();
-        var createButton = createBookButton();
-
+        var createButton = bookRegimeButton();
         add(repoButton);
         add(createButton);
-
         setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.GRAY));
     }
 
@@ -29,10 +31,6 @@ public class TopPanel extends JPanel {
         var repoButton = new JButton(getRepoButtonText());
         repoButton.addActionListener(_ -> toggleRepository(repoButton));
         return repoButton;
-    }
-
-    private JButton createBookButton() {
-        return new JButton("Create book");
     }
 
     private void toggleRepository(JButton repoButton) {
@@ -45,5 +43,23 @@ public class TopPanel extends JPanel {
 
     private String getRepoButtonText() {
         return useDatabase ? "In-Memory Repository" : "Database Repository";
+    }
+
+    private JButton bookRegimeButton() {
+        var regimeButton =  new JButton("Create book");
+        regimeButton.addActionListener(_ -> toggleRegime(regimeButton));
+        return regimeButton;
+    }
+
+    private void toggleRegime(JButton regimeButton) {
+        createMode = !createMode;
+        regimeButton.setText(getRegimeButtonText());
+        if (booksRegimeListener != null) {
+            booksRegimeListener.switchRegime(createMode);
+        }
+    }
+
+    private String getRegimeButtonText() {
+        return createMode ? "List books" : "Create book";
     }
 }

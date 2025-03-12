@@ -7,14 +7,14 @@
     <groupId>com.viktor.oop</groupId>
     <artifactId>bookstore</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>  <!-- Indicates this is a parent project -->
+    <packaging>pom</packaging>
     <name>bookstore</name>
     <description>Bookstore Spring Multi-Module Project</description>
 
     <modules>
         <module>backend</module>
         <module>frontend</module>
-        <module>launcher</module> <!-- Defines your backend module -->
+        <module>launcher</module>
     </modules>
 
     <properties>
@@ -41,12 +41,23 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.36</version> <!-- Explicitly add Lombok version here -->
+                            <version>1.18.36</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.viktor.oop.ApplicationLauncher</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
