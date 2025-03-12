@@ -19,6 +19,9 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format("ISBN:\n%s\ntitle: %s\nauthor: %s \nyear published: %d", isbn.toString().replace("-", "\n-"), title, author, yearPublished);
+        return String.format(
+                "Title: %s%nAuthor: %s%nYear Published: %d%n%nISBN:%n%s",
+                title, author, yearPublished, isbn);
     }
+
 }

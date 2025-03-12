@@ -20,13 +20,7 @@ public class ApplicationLauncher {
     }
 
     private static void waitForBackend() {
-        System.out.println("Waiting for backend to be ready...");
-
-        while (true) {
-            if (bookService.getStatus()) {
-                System.out.println("Backend is ready!");
-                break;
-            }
+        while (!bookService.getStatus()) {
             try {
                 TimeUnit.SECONDS.sleep(1); // Retry every 1 second
             } catch (InterruptedException e) {

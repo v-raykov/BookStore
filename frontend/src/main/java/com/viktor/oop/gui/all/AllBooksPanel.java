@@ -28,4 +28,8 @@ public class AllBooksPanel extends JPanel {
     public void deleteBook(UUID isbn) {
         bookPanel.deleteBook(isbn);
     }
+
+    public void switchRepo(boolean useDatabase) {
+        bookPanel.switchRepo(useDatabase);
+    }
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SearchCriteria {
     ALL(""),
-    ID("/"),
+    ISBN("/"),
     TITLE("/title/"),
     AUTHOR("/author/"),;
 

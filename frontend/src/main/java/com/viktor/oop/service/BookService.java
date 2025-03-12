@@ -38,7 +38,7 @@ public class BookService {
     }
 
     public void deleteBookByIsbn(UUID id) {
-        HttpRequest request = HttpRequest.newBuilder()
+        var request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/" + id.toString()))
                 .DELETE()
                 .build();
@@ -49,7 +49,21 @@ public class BookService {
         }
     }
 
+
+    public void switchRepo(boolean useDatabase) {
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/db/" + useDatabase))
+                .PUT(HttpRequest.BodyPublishers.noBody())
+                .build();
+        try {
+            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private HttpResponse<String> getResponse(String query, SearchCriteria criteria) throws IOException, InterruptedException {
+        System.out.println(BASE_URL + getEndpoint(query, criteria));
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + getEndpoint(query, criteria)))
                 .GET()

@@ -67,16 +67,19 @@ public class SearchPanel extends JPanel {
 
     private void configureLayout(GroupLayout layout) {
         layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
+        layout.setAutoCreateContainerGaps(false); // Prevent unnecessary gaps from pushing content
+
         layout.setHorizontalGroup(
-                layout.createSequentialGroup()
+                layout.createSequentialGroup() // Start from the leftmost edge
                         .addComponent(criteriaBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED) // Small gap
                         .addComponent(searchField, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED) // Small gap
                         .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
 
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                layout.createParallelGroup(GroupLayout.Alignment.BASELINE)  // Align everything perfectly
                         .addComponent(criteriaBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(searchField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)

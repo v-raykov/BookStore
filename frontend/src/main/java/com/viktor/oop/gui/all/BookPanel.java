@@ -49,4 +49,9 @@ public class BookPanel extends JScrollPane {
         bookService.deleteBookByIsbn(isbn);
         displayBooksByCriteria("_", SearchCriteria.ALL);
     }
+
+    public void switchRepo(boolean useDatabase) {
+        bookService.switchRepo(useDatabase);
+        displayBooksByCriteria("_", SearchCriteria.ALL);
+    }
 }
