@@ -1,6 +1,6 @@
 package com.viktor.oop.gui.all;
 
-import com.viktor.oop.gui.main.BookSelectListener;
+import com.viktor.oop.gui.listener.BookSelectListener;
 import lombok.Setter;
 
 import javax.swing.*;
@@ -8,21 +8,21 @@ import java.awt.*;
 
 @Setter
 public class AllBooksPanel extends JPanel {
-    private final BookGridPanel bookGridPanel;
+    private final BookPanel bookPanel;
 
     public AllBooksPanel() {
         setLayout(new BorderLayout());
 
         SearchPanel searchPanel = new SearchPanel();
-        bookGridPanel = new BookGridPanel();
+        bookPanel = new BookPanel();
 
         add(searchPanel, BorderLayout.NORTH);
-        add(bookGridPanel, BorderLayout.CENTER);
+        add(bookPanel, BorderLayout.CENTER);
 
-        searchPanel.setListener(bookGridPanel::displayBooksByCriteria);
+        searchPanel.setListener(bookPanel::displayBooksByCriteria);
     }
 
     public void setListener(BookSelectListener listener) {
-        bookGridPanel.setListener(listener);
+        bookPanel.setListener(listener);
     }
 }

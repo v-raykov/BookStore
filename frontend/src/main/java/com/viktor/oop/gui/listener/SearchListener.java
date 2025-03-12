@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.all;
+package com.viktor.oop.gui.listener;
 
 import com.viktor.oop.service.SearchCriteria;
 

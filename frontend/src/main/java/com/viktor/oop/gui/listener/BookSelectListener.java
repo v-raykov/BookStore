@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.main;
+package com.viktor.oop.gui.listener;
 
 import com.viktor.oop.model.Book;
 
