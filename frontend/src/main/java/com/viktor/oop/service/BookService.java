@@ -28,27 +28,34 @@ public class BookService {
     }
 
     public List<Book> getBooksByCriteria(String query, SearchCriteria criteria) throws IOException, InterruptedException {
-        System.out.println(BASE_URL + getEndpoint(query, criteria));
+        var response = getResponse(query, criteria);
+        if (response.statusCode() == 200) {
+            return getBooks(response.body());
+        } else {
+            throw new IOException("API Error: " + response.statusCode());
+        }
+    }
+
+    private HttpResponse<String> getResponse(String query, SearchCriteria criteria) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + getEndpoint(query, criteria)))
                 .GET()
                 .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 200) {
-            if (objectMapper.readTree(response.body()).isArray()) {
-                return objectMapper.readValue(response.body(), new TypeReference<>() {});
-            } else {
-                return Collections.singletonList(objectMapper.readValue(response.body(), new TypeReference<>() {}));
-            }
+        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    private List<Book> getBooks(String response) throws IOException {
+        if (objectMapper.readTree(response).isArray()) {
+            return objectMapper.readValue(response, new TypeReference<>() {});
         } else {
-            throw new IOException("API Error: " + response.statusCode());
+            return Collections.singletonList(objectMapper.readValue(response, new TypeReference<>() {}));
         }
     }
 
     private String getEndpoint(String query, SearchCriteria criteria) {
         var criteriaEndpoint = criteria.getEndpoint();
         if (criteria != SearchCriteria.ALL) {
-            return String.format("/%s%s%s", criteriaEndpoint, criteriaEndpoint.isEmpty() ? "" : "/", query);
+            return criteriaEndpoint + query.replace(" ", "%20");
         }
         return criteria.getEndpoint();
     }
@@ -59,7 +66,6 @@ public class BookService {
                 .timeout(Duration.ofSeconds(1)) // Set request timeout
                 .GET()
                 .build();
-
         try {
             HttpClient client = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(1)) // Set connection timeout
