@@ -25,18 +25,11 @@ public class GridPanel extends JPanel {
 
     private void addBookButtons(List<Book> books) {
         for (Book book : books) {
-            add(createBookButton(book));
+            var button = new BookButton(book.getTitle());
+            button.addActionListener(_ -> notifyListener(book));
+            add(button);
         }
     }
-
-    private JButton createBookButton(Book book) {
-        var button = new JButton("<html><center>" + book.getTitle() + "</center></html>");
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
-        button.setVerticalTextPosition(SwingConstants.CENTER);
-        button.addActionListener(_ -> notifyListener(book));
-        return button;
-    }
-
 
     private void notifyListener(Book book) {
         if (listener != null) {
@@ -47,7 +40,7 @@ public class GridPanel extends JPanel {
     private void adjustGridSize(int bookCount) {
         int rows = (int) Math.ceil(bookCount / 3.0);
         setLayout(new GridLayout(rows, 3, 10, 10));
-        setPreferredSize(new Dimension(400, rows * 100)); // Adjust height dynamically
+        setPreferredSize(new Dimension(400, rows * 100));
     }
 
     private void refreshUI() {
