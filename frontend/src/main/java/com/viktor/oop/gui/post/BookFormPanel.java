@@ -55,5 +55,17 @@ public class BookFormPanel extends JPanel {
                         .addComponent(yearField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
     }
+
+    public String getTitle() {
+        return titleField.getText();
+    }
+
+    public String getAuthor() {
+        return authorField.getText();
+    }
+
+    public int getYearPublished() {
+        return Integer.parseInt(yearField.getText());
+    }
 }
 

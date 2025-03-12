@@ -1,5 +1,8 @@
 package com.viktor.oop.gui.post;
 
+import com.viktor.oop.model.BookDto;
+import com.viktor.oop.service.BookService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -7,31 +10,35 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 public class CreateSinglePanel extends JPanel {
-    private final JButton button;
-    private final JPanel formPanel;
+    private final BookFormPanel formPanel;
+    private final ButtonPanel buttonPanel;
+    private final BookService bookService;
 
     public CreateSinglePanel() {
         setLayout(new BorderLayout());
+        bookService = BookService.getInstance();
 
         formPanel = new BookFormPanel();
-        button = createButton();
+        buttonPanel = getButtonPanel();
 
         add(formPanel, BorderLayout.CENTER);
-        add(createButtonPanel(), BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.SOUTH);
         addComponentListener(getListener());
     }
 
-    private JPanel createButtonPanel() {
-        var buttonPanel = new JPanel(new BorderLayout()); // Assuming ButtonPanel is the same as in CreateBulkPanel
-        buttonPanel.add(button);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        return buttonPanel;
+    private ButtonPanel getButtonPanel() {
+        return new ButtonPanel() {
+            @Override
+            protected JButton createButton() {
+                var button = new JButton("Create");
+                button.addActionListener(_ -> createBook());
+                return button;
+            }
+        };
     }
 
-    private JButton createButton() {
-        var button = new JButton("Create");
-        button.addActionListener(_ -> {});
-        return button;
+    private void createBook() {
+        bookService.createBook(new BookDto(formPanel.getTitle(), formPanel.getAuthor(), formPanel.getYearPublished()));
     }
 
     private ComponentListener getListener() {
@@ -48,7 +55,7 @@ public class CreateSinglePanel extends JPanel {
         int height = getHeight();
         if (width == 0 || height == 0) return;
         int size = Math.min(width, height) / 14;
-        button.setFont(new Font(button.getFont().getName(), Font.PLAIN, size));
+        buttonPanel.setFontSize(size);
         for (Component component : formPanel.getComponents()) {
             component.setFont(new Font(component.getFont().getName(), Font.PLAIN, size));
         }

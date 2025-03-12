@@ -1,8 +1,10 @@
 package com.viktor.oop.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viktor.oop.model.Book;
+import com.viktor.oop.model.BookDto;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -108,6 +110,24 @@ public class BookService {
         try {
             httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createBook(BookDto bookDto) {
+        HttpRequest request;
+        try {
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(bookDto)))
+                    .build();
+            try {
+                httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
