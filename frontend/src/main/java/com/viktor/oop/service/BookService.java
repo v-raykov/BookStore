@@ -12,7 +12,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +27,15 @@ public class BookService {
     private BookService() {
         httpClient = HttpClient.newHttpClient();
         objectMapper = new ObjectMapper();
+    }
+
+    public boolean getStatus() {
+        try {
+            getBooksByCriteria("_", SearchCriteria.ALL);
+            return true;
+        } catch (IOException | InterruptedException e) {
+            return false;
+        }
     }
 
     public List<Book> getBooksByCriteria(String query, SearchCriteria criteria) throws IOException, InterruptedException {
@@ -51,6 +59,36 @@ public class BookService {
         }
     }
 
+    public void createBooks(String text) {
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/bulk"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(text))
+                .build();
+        try {
+            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createBook(BookDto bookDto) {
+        HttpRequest request;
+        try {
+            request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(bookDto)))
+                    .build();
+            try {
+                httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void switchRepo(boolean useDatabase) {
         var request = HttpRequest.newBuilder()
@@ -86,49 +124,5 @@ public class BookService {
             return criteriaEndpoint + query.replace(" ", "%20");
         }
         return criteria.getEndpoint();
-    }
-
-    public boolean getStatus() {
-        var request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
-                .timeout(Duration.ofSeconds(1)) // Set request timeout
-                .GET()
-                .build();
-        try {
-            return httpClient.send(request, HttpResponse.BodyHandlers.ofString()).statusCode() == 200;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public void createBooks(String text) {
-        var request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + "/bulk"))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(text))
-                .build();
-        try {
-            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void createBook(BookDto bookDto) {
-        HttpRequest request;
-        try {
-            request = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_URL))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(bookDto)))
-                    .build();
-            try {
-                httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
