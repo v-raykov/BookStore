@@ -34,11 +34,7 @@ public class BookPanel extends JScrollPane {
     }
 
     private List<Book> fetchBooks(String query, SearchCriteria searchCriteria) {
-        try {
-            return bookService.getBooksByCriteria(query, searchCriteria);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        return bookService.getBooksByCriteria(query, searchCriteria);
     }
 
     public void setSelectListener(BookSelectListener listener) {

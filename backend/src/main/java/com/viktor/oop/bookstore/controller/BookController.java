@@ -58,4 +58,9 @@ public class BookController {
     public void switchRepository(@PathVariable Boolean useDb) {
         bookService.switchRepository(useDb);
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<Void> getStatus() {
+        return ResponseEntity.ok().build();
+    }
 }
