@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viktor.oop.model.Book;
 import com.viktor.oop.model.BookDto;
-import lombok.Getter;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,8 +17,7 @@ import java.util.UUID;
 
 
 public class BookService {
-    @Getter
-    private static final BookService instance = new BookService();
+    private static BookService instance;
 
     private static final String BASE_URL = "http://localhost:8080/book";
     private static final String STATUS_URL = BASE_URL + "/status";
@@ -35,6 +33,13 @@ public class BookService {
     private BookService() {
         httpClient = HttpClient.newHttpClient();
         objectMapper = new ObjectMapper();
+    }
+
+    public static BookService getInstance() {
+        if (instance == null) {
+            instance = new BookService();
+        }
+        return instance;
     }
 
     public boolean getStatus() {
