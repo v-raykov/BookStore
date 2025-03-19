@@ -1,11 +1,16 @@
-package com.viktor.oop.gui.post;
+package com.viktor.oop.gui.web.post;
+
+import lombok.Getter;
 
 import javax.swing.*;
 
 public class BookFormPanel extends JPanel {
     private final GroupLayout layout;
+    @Getter
     private final JTextField titleField;
+    @Getter
     private final JTextField authorField;
+    @Getter
     private final JTextField yearField;
 
     public BookFormPanel() {

@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.get;
+package com.viktor.oop.gui.web.get.all;
 
 import com.viktor.oop.gui.listener.BookSelectListener;
 import com.viktor.oop.model.Book;
@@ -6,15 +6,14 @@ import com.viktor.oop.service.BookService;
 import com.viktor.oop.service.SearchCriteria;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-public class BookPanel extends JScrollPane {
+public class ScrollPane extends JScrollPane {
     private final BookService bookService;
     private final GridPanel gridPanel;
 
-    public BookPanel() {
+    public ScrollPane() {
         gridPanel = new GridPanel();
         bookService = BookService.getInstance();
         configure();

@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.get.info;
+package com.viktor.oop.gui.web.get.info;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,6 @@ public class InfoPane extends JScrollPane {
 
     public void setText(String text) {
         infoArea.setText(text);
-        infoArea.setCaretPosition(0);
     }
 
     public void setFontSize(int size) {

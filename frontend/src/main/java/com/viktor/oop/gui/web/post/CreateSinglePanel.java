@@ -1,55 +1,46 @@
-package com.viktor.oop.gui.post;
+package com.viktor.oop.gui.web.post;
 
+import com.viktor.oop.model.BookDto;
 import com.viktor.oop.service.BookService;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
-
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-public class CreateBulkPanel extends JPanel {
-    private final JTextArea textArea;
-    private final ButtonPanel buttonPanel;
+public class CreateSinglePanel extends JPanel {
+    @Getter
+    private final BookFormPanel formPanel;
+    private final CreateBookButtonPanel buttonPanel;
     private final BookService bookService;
 
-    public CreateBulkPanel() {
+    public CreateSinglePanel() {
         setLayout(new BorderLayout());
         bookService = BookService.getInstance();
+
+        formPanel = new BookFormPanel();
         buttonPanel = getButtonPanel();
-        textArea = getTextArea();
-        add(getTextPane(), BorderLayout.CENTER);
+
+        add(formPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
         addComponentListener(getListener());
     }
 
-    private ButtonPanel getButtonPanel() {
-        return new ButtonPanel() {
+    protected CreateBookButtonPanel getButtonPanel() {
+        return new CreateBookButtonPanel() {
             @Override
             protected JButton createButton() {
-                var button = new JButton("Create (via JSON list)");
-                button.addActionListener(_ -> createBooks());
+                var button = new JButton("Create");
+                button.addActionListener(_ -> createBook());
                 return button;
             }
         };
     }
 
-    private void createBooks() {
-        bookService.createBooks(textArea.getText());
-    }
-
-    private JScrollPane getTextPane() {
-        var scrollPane = new JScrollPane(textArea);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        return scrollPane;
-    }
-
-    private JTextArea getTextArea() {
-        var textArea = new JTextArea();
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        return textArea;
+    protected void createBook() {
+        bookService.createBook(new BookDto(formPanel.getTitle(), formPanel.getAuthor(), formPanel.getYearPublished()));
     }
 
     private ComponentListener getListener() {
@@ -66,7 +57,9 @@ public class CreateBulkPanel extends JPanel {
         int height = getHeight();
         if (width == 0 || height == 0) return;
         int size = Math.min(width, height) / 14;
-        textArea.setFont(new Font(textArea.getFont().getName(), Font.PLAIN, (size / 3) * 2));
         buttonPanel.setFontSize(size);
+        for (Component component : formPanel.getComponents()) {
+            component.setFont(new Font(component.getFont().getName(), Font.PLAIN, size));
+        }
     }
 }

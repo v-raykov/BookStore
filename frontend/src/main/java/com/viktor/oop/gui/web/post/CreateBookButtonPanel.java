@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.post;
+package com.viktor.oop.gui.web.post;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,10 +8,10 @@ import java.awt.*;
 
 @Getter
 @Setter
-public abstract class ButtonPanel extends JPanel {
+public abstract class CreateBookButtonPanel extends JPanel {
     private JButton button;
 
-    public ButtonPanel() {
+    public CreateBookButtonPanel() {
         super(new BorderLayout());
         setButton(createButton());
         add(button);

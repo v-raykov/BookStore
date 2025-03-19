@@ -1,63 +1,73 @@
 package com.viktor.oop.gui.main;
 
-import com.viktor.oop.gui.get.AllBooksPanel;
-import com.viktor.oop.gui.get.info.BookInfoPanel;
-import com.viktor.oop.gui.post.CreateBookPanel;
+import com.viktor.oop.gui.web.get.all.AllBooksPane;
+import com.viktor.oop.gui.web.post.CreateBookPane;
+import com.viktor.oop.gui.web.put.EditPane;
 
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.UUID;
 
 public class MainPane extends JSplitPane {
     private final TopPanel topPanel;
-    private final AllBooksPanel allBooksPanel;
-    private final BookInfoPanel bookInfoPanel;
-    private final CreateBookPanel createBookPanel;
 
-    private final JSplitPane splitPane;
+    private final AllBooksPane allBooksPane;
+    private final CreateBookPane createBookPane;
+    private final EditPane editBookPanel;
+
+    private Regime regime;
 
     public MainPane() {
         setLayout(new BorderLayout());
         topPanel = new TopPanel();
-        allBooksPanel = new AllBooksPanel();
-        bookInfoPanel = new BookInfoPanel();
-        createBookPanel = new CreateBookPanel();
-        splitPane = getSplitPane();
+        createBookPane = new CreateBookPane();
+        editBookPanel = new EditPane();
+        allBooksPane = new AllBooksPane();
+        regime = Regime.LIST;
         setListeners();
-        addComponents(false);
+        updatePanel();
     }
 
     private void setListeners() {
-        allBooksPanel.setSelectListener(bookInfoPanel::displayBookInfo);
-        bookInfoPanel.setDeleteListener(allBooksPanel::deleteBook);
-        topPanel.setRepoSwitchListener(allBooksPanel::switchRepo);
-        topPanel.setBooksRegimeListener(this::switchRegime);
+        topPanel.setRepoSwitchListener(allBooksPane::switchRepo);
+        topPanel.setBooksRegimeListener(this::setRegime);
+        editBookPanel.setRegimeListener(this::setRegime);
+        allBooksPane.setEditListener(this::editBook);
     }
 
-    private void switchRegime(boolean createMode) {
+    private void editBook(UUID id) {
+        editBookPanel.setBookId(id);
+        setRegime(Regime.EDIT);
+    }
+
+    private void setRegime(Regime regime) {
+        this.regime = regime;
         removeAll();
-        addComponents(createMode);
+        updatePanel();
         revalidate();
         repaint();
     }
 
-    private void addComponents(boolean createMode) {
+    private void updatePanel() {
+        removeAll();
         add(topPanel, BorderLayout.NORTH);
-        allBooksPanel.refresh();
-        add(createMode ? createBookPanel : splitPane, BorderLayout.CENTER);
+        add(getPanel(), BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
-    private JSplitPane getSplitPane() {
-        var splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setLeftComponent(allBooksPanel);
-        splitPane.setRightComponent(bookInfoPanel);
-        configureSplitPane(splitPane);
-        return splitPane;
+
+    private JComponent getPanel() {
+        return switch (regime) {
+            case LIST -> refreshAndGetAllBooksPanel();
+            case CREATE -> createBookPane;
+            case EDIT -> editBookPanel;
+        };
     }
 
-    private void configureSplitPane(JSplitPane splitPane) {
-        splitPane.setResizeWeight(2.0 / 3.0);
-        splitPane.setEnabled(false);
-        splitPane.setBorder(null);
+    private JSplitPane refreshAndGetAllBooksPanel() {
+        allBooksPane.refresh();
+        return allBooksPane;
     }
 }

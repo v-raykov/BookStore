@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viktor.oop.model.Book;
 import com.viktor.oop.model.BookDto;
+import org.modelmapper.ModelMapper;
 
 import java.io.IOException;
 import java.net.URI;
@@ -30,10 +31,12 @@ public class BookService {
 
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
+    private final ModelMapper modelMapper;
 
     private BookService() {
         httpClient = HttpClient.newHttpClient();
         objectMapper = new ObjectMapper();
+        modelMapper = new ModelMapper();
     }
 
     public static BookService getInstance() {
@@ -55,6 +58,13 @@ public class BookService {
     public List<Book> getBooksByCriteria(String query, SearchCriteria criteria) {
         try {
             return requestGet(query, criteria);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void editBook(Book book) {
+        try {
+            requestPut(book);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -102,6 +112,10 @@ public class BookService {
         return mapResponseToBooks(response.body());
     }
 
+    private void requestPut(Book book) throws IOException, InterruptedException {
+        validateResponse(httpClient.send(buildRequestPut(book), HttpResponse.BodyHandlers.ofString()));
+    }
+
     private void requestDelete(String id) throws IOException, InterruptedException {
         validateResponse(httpClient.send(buildRequestDelete(id), HttpResponse.BodyHandlers.ofString()));
     }
@@ -119,7 +133,7 @@ public class BookService {
     }
 
     private void validateResponse(HttpResponse<String> response) throws IOException {
-        if (response.statusCode() != 200) {
+        if (response.statusCode()/100 != 2) {
             throw new IOException("API Error: " + response.statusCode());
         }
     }
@@ -135,6 +149,14 @@ public class BookService {
         return HttpRequest.newBuilder()
                 .uri(URI.create(GET_URL + getEndpoint(query, criteria)))
                 .GET()
+                .build();
+    }
+
+    private HttpRequest buildRequestPut(Book book) throws JsonProcessingException {
+        return HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .uri(URI.create(ID_URL + book.getIsbn()))
+                .PUT(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(modelMapper.map(book, BookDto.class))))
                 .build();
     }
 

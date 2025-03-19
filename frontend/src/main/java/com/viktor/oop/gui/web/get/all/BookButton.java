@@ -1,4 +1,4 @@
-package com.viktor.oop.gui.get;
+package com.viktor.oop.gui.web.get.all;
 
 import javax.swing.*;
 import java.awt.*;

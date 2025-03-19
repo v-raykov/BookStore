@@ -1,6 +1,6 @@
-package com.viktor.oop.gui.get.info;
+package com.viktor.oop.gui.web.get.info;
 
-import com.viktor.oop.gui.listener.BookDeleteListener;
+import com.viktor.oop.gui.listener.ActionListener;
 import com.viktor.oop.model.Book;
 
 import javax.swing.*;
@@ -27,6 +27,15 @@ public class BookInfoPanel extends JPanel {
         buttonPanel.setSelectedBookIsbn(book.getIsbn());
     }
 
+    public void setDeleteListener(ActionListener bookDeleteListener) {
+        buttonPanel.setDeleteListener(bookDeleteListener);
+    }
+
+    public void setEditListener(ActionListener bookEditListener) {
+        buttonPanel.setEditListener(bookEditListener);
+    }
+
+
     private ComponentListener getListener() {
         return new ComponentAdapter() {
             @Override
@@ -45,7 +54,7 @@ public class BookInfoPanel extends JPanel {
         buttonPanel.setFontSize(size);
     }
 
-    public void setDeleteListener(BookDeleteListener bookDeleteListener) {
-        buttonPanel.setDeleteListener(bookDeleteListener);
+    public void clear() {
+        infoPane.setText("");
     }
 }

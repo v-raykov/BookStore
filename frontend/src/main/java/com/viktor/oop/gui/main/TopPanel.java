@@ -1,6 +1,6 @@
 package com.viktor.oop.gui.main;
 
-import com.viktor.oop.gui.listener.BooksRegimeListener;
+import com.viktor.oop.gui.listener.RegimeListener;
 import com.viktor.oop.gui.listener.RepoSwitchListener;
 import lombok.Setter;
 
@@ -15,7 +15,7 @@ public class TopPanel extends JPanel {
     private RepoSwitchListener repoSwitchListener;
 
     @Setter
-    private BooksRegimeListener booksRegimeListener;
+    private RegimeListener booksRegimeListener;
 
     public TopPanel() {
         super(new FlowLayout(FlowLayout.LEFT));
@@ -55,7 +55,7 @@ public class TopPanel extends JPanel {
         createMode = !createMode;
         regimeButton.setText(getRegimeButtonText());
         if (booksRegimeListener != null) {
-            booksRegimeListener.switchRegime(createMode);
+            booksRegimeListener.switchRegime(createMode ? Regime.CREATE : Regime.LIST);
         }
     }
 
