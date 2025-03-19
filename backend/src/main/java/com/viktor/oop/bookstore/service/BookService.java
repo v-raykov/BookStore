@@ -19,8 +19,9 @@ import java.util.stream.Collectors;
 public class BookService {
     private final DatabaseBookRepository databaseBookRepository;
     private final InMemoryBookRepository inMemoryBookRepository;
-    private BookRepository bookRepository;
     private final ModelMapper modelMapper;
+
+    private BookRepository bookRepository;
 
     public List<Book> getBook() {
         return bookRepository.getAllBooks();
@@ -38,6 +39,14 @@ public class BookService {
         return bookDtos.stream()
                 .map(this::addBook)
                 .collect(Collectors.toList());
+    }
+
+    public Book updateBook(UUID id, BookDto bookDto) {
+        var book = getBookByIsbn(id);
+        book.setTitle(bookDto.getTitle());
+        book.setAuthor(bookDto.getAuthor());
+        book.setYearPublished(bookDto.getYearPublished());
+        return bookRepository.saveBook(book);
     }
 
     public List<Book> getBookByAuthor(String author) {

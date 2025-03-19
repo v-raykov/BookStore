@@ -18,49 +18,55 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping()
-    public ResponseEntity<List<Book>> getBook() {
+    public ResponseEntity<List<Book>> getBooks() {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook());
     }
 
     @GetMapping({"/{id}"})
-    public ResponseEntity<Book> getBook(@PathVariable("id") UUID id) {
+    public ResponseEntity<Book> getBooks(@PathVariable("id") UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookByIsbn(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable("id") UUID id, @RequestBody BookDto bookDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.updateBook(id, bookDto));
     }
 
     @GetMapping("/author/{author}")
     public ResponseEntity<List<Book>> getBookByAuthor(@PathVariable String author) {
-        return ResponseEntity.ok().body(bookService.getBookByAuthor(author));
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookByAuthor(author));
     }
 
     @GetMapping("/title/{title}")
     public ResponseEntity<List<Book>> getBookByTitle(@PathVariable String title) {
-        return ResponseEntity.ok().body(bookService.getBookByTitle(title));
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.getBookByTitle(title));
     }
 
     @PostMapping()
     public ResponseEntity<Book> postBook(@RequestBody BookDto bookDto) {
-        return ResponseEntity.ok().body(bookService.addBook(bookDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(bookDto));
     }
 
     @PostMapping("/bulk")
     public ResponseEntity<List<Book>> postBookBulk(@RequestBody List<BookDto> bookDtos) {
-        return ResponseEntity.ok().body(bookService.addBookBulk(bookDtos));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBookBulk(bookDtos));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable UUID id) {
         return bookService.removeBook(id)
-                ? ResponseEntity.ok().build()
+                ? ResponseEntity.status(HttpStatus.NO_CONTENT).build()
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PutMapping("/db/{useDb}")
-    public void switchRepository(@PathVariable Boolean useDb) {
+    public ResponseEntity<Void> switchRepository(@PathVariable Boolean useDb) {
         bookService.switchRepository(useDb);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/status")
     public ResponseEntity<Void> getStatus() {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.UUID;
 
 public class AllBooksPanel extends JPanel {
-    private BookPanel bookPanel;
+    private final BookPanel bookPanel;
 
     public AllBooksPanel() {
         setLayout(new BorderLayout());

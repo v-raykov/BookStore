@@ -42,4 +42,9 @@ public interface DatabaseBookRepository extends BookRepository, JpaRepository<Bo
                 .filter(book -> book.getTitle().equals(title))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    default Book saveBook(Book book) {
+        return save(book);
+    }
 }

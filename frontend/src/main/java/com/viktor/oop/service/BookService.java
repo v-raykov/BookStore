@@ -20,6 +20,7 @@ public class BookService {
     private static BookService instance;
 
     private static final String BASE_URL = "http://localhost:8080/book";
+
     private static final String STATUS_URL = BASE_URL + "/status";
     private static final String GET_URL = BASE_URL;
     private static final String ID_URL = GET_URL + "/";
@@ -114,7 +115,7 @@ public class BookService {
     }
 
     private void requestSwitchRepo(boolean useDatabase) throws IOException, InterruptedException {
-        httpClient.send(buildRequestSwitchRepo(useDatabase), HttpResponse.BodyHandlers.ofString());
+        validateResponse(httpClient.send(buildRequestSwitchRepo(useDatabase), HttpResponse.BodyHandlers.ofString()));
     }
 
     private void validateResponse(HttpResponse<String> response) throws IOException {

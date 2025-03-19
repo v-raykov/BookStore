@@ -8,22 +8,12 @@
         <artifactId>bookstore</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.18.3</version>
         </dependency>
-
     </dependencies>
-
     <artifactId>frontend</artifactId>
-
-    <properties>
-        <maven.compiler.source>23</maven.compiler.source>
-        <maven.compiler.target>23</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
 </project>

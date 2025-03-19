@@ -19,6 +19,10 @@ public class InMemoryBookRepository implements BookRepository {
         return books.get(isbn);
     }
 
+    public Book saveBook(Book book) {
+        return books.put(book.getIsbn(), book);
+    }
+
     public boolean removeBook(UUID isbn) {
         return books.remove(isbn) != null;
     }
