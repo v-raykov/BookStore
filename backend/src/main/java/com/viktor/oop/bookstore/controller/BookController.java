@@ -29,7 +29,7 @@ public class BookController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable("id") UUID id, @RequestBody BookDto bookDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.updateBook(id, bookDto));
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.updateBook(id, bookDto));
     }
 
     @GetMapping("/author/{author}")
