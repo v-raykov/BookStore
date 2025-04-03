@@ -1,8 +1,10 @@
 package com.viktor.oop.bookstore.model.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class BookDto {
     private String title;
     private String author;

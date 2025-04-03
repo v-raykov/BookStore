@@ -6,10 +6,11 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 public class Book {
     @Id
     private UUID isbn;
