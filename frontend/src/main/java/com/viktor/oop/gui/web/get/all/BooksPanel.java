@@ -1,7 +1,6 @@
 package com.viktor.oop.gui.web.get.all;
 
 import com.viktor.oop.gui.listener.BookSelectListener;
-import com.viktor.oop.gui.web.get.SearchPanel;
 
 import javax.swing.*;
 import java.awt.*;

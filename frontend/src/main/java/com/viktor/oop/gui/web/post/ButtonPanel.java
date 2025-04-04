@@ -8,10 +8,10 @@ import java.awt.*;
 
 @Getter
 @Setter
-public abstract class CreateBookButtonPanel extends JPanel {
+public abstract class ButtonPanel extends JPanel {
     private JButton button;
 
-    public CreateBookButtonPanel() {
+    public ButtonPanel() {
         super(new BorderLayout());
         setButton(createButton());
         add(button);

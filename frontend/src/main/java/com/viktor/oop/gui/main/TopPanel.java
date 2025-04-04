@@ -15,7 +15,7 @@ public class TopPanel extends JPanel {
     private RepoSwitchListener repoSwitchListener;
 
     @Setter
-    private RegimeListener booksRegimeListener;
+    private RegimeListener regimeListener;
 
     public TopPanel() {
         super(new FlowLayout(FlowLayout.LEFT));
@@ -54,8 +54,8 @@ public class TopPanel extends JPanel {
     private void toggleRegime(JButton regimeButton) {
         createMode = !createMode;
         regimeButton.setText(getRegimeButtonText());
-        if (booksRegimeListener != null) {
-            booksRegimeListener.switchRegime(createMode ? Regime.CREATE : Regime.LIST);
+        if (regimeListener != null) {
+            regimeListener.switchRegime(createMode ? Regime.CREATE : Regime.LIST);
         }
     }
 

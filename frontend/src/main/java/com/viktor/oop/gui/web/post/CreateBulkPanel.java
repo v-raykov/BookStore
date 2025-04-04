@@ -11,7 +11,7 @@ import java.awt.event.ComponentListener;
 
 public class CreateBulkPanel extends JPanel {
     private final JTextArea textArea;
-    private final CreateBookButtonPanel buttonPanel;
+    private final ButtonPanel buttonPanel;
     private final BookService bookService;
 
     public CreateBulkPanel() {
@@ -24,8 +24,8 @@ public class CreateBulkPanel extends JPanel {
         addComponentListener(getListener());
     }
 
-    private CreateBookButtonPanel getButtonPanel() {
-        return new CreateBookButtonPanel() {
+    private ButtonPanel getButtonPanel() {
+        return new ButtonPanel() {
             @Override
             protected JButton createButton() {
                 var button = new JButton("Create (via JSON list)");

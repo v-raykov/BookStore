@@ -13,7 +13,7 @@ import java.awt.event.ComponentListener;
 public class CreateSinglePanel extends JPanel {
     @Getter
     private final BookFormPanel formPanel;
-    private final CreateBookButtonPanel buttonPanel;
+    private final ButtonPanel buttonPanel;
     private final BookService bookService;
 
     public CreateSinglePanel() {
@@ -28,8 +28,8 @@ public class CreateSinglePanel extends JPanel {
         addComponentListener(getListener());
     }
 
-    protected CreateBookButtonPanel getButtonPanel() {
-        return new CreateBookButtonPanel() {
+    protected ButtonPanel getButtonPanel() {
+        return new ButtonPanel() {
             @Override
             protected JButton createButton() {
                 var button = new JButton("Create");

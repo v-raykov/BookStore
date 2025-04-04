@@ -4,17 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
-    private final JSplitPane splitPane;
+    private final JSplitPane mainPane;
 
     public MainPanel() {
-        splitPane = new MainPane();
+        mainPane = new MainPane();
         setLayout(new BorderLayout());
-        add(splitPane, BorderLayout.CENTER);
+        add(mainPane, BorderLayout.CENTER);
     }
 
     @Override
     public void doLayout() {
         super.doLayout();
-        splitPane.setDividerLocation((int) (getWidth() * (2.0 / 3.0)));
+        mainPane.setDividerLocation((int) (getWidth() * (2.0 / 3.0)));
     }
 }

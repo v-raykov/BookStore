@@ -2,7 +2,7 @@ package com.viktor.oop.gui.main;
 
 import com.viktor.oop.gui.web.get.all.AllBooksPane;
 import com.viktor.oop.gui.web.post.CreateBookPane;
-import com.viktor.oop.gui.web.put.EditPane;
+import com.viktor.oop.gui.web.put.EditPanel;
 
 import javax.swing.*;
 
@@ -14,7 +14,7 @@ public class MainPane extends JSplitPane {
 
     private final AllBooksPane allBooksPane;
     private final CreateBookPane createBookPane;
-    private final EditPane editBookPanel;
+    private final EditPanel editPanel;
 
     private Regime regime;
 
@@ -22,7 +22,7 @@ public class MainPane extends JSplitPane {
         setLayout(new BorderLayout());
         topPanel = new TopPanel();
         createBookPane = new CreateBookPane();
-        editBookPanel = new EditPane();
+        editPanel = new EditPanel();
         allBooksPane = new AllBooksPane();
         regime = Regime.LIST;
         setListeners();
@@ -31,13 +31,13 @@ public class MainPane extends JSplitPane {
 
     private void setListeners() {
         topPanel.setRepoSwitchListener(allBooksPane::switchRepo);
-        topPanel.setBooksRegimeListener(this::setRegime);
-        editBookPanel.setRegimeListener(this::setRegime);
+        topPanel.setRegimeListener(this::setRegime);
+        editPanel.setRegimeListener(this::setRegime);
         allBooksPane.setEditListener(this::editBook);
     }
 
     private void editBook(UUID id) {
-        editBookPanel.setBookId(id);
+        editPanel.setBookById(id);
         setRegime(Regime.EDIT);
     }
 
@@ -62,7 +62,7 @@ public class MainPane extends JSplitPane {
         return switch (regime) {
             case LIST -> refreshAndGetAllBooksPanel();
             case CREATE -> createBookPane;
-            case EDIT -> editBookPanel;
+            case EDIT -> editPanel;
         };
     }
 

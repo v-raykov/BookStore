@@ -34,35 +34,9 @@ public class ButtonPanel extends JPanel {
         this.editButton.setListener(editListener);
     }
 
-
     public void setFontSize(int size) {
         Font newFont = new Font(deleteButton.getFont().getName(), Font.PLAIN, size);
         deleteButton.setFont(newFont);
         editButton.setFont(newFont);
     }
-    /*
-
-    private JButton getEditButton() {
-        var button = new JButton("Edit");
-        button.setPreferredSize(new Dimension(0, 60));
-        button.addActionListener(_ -> {
-            if (editListener != null) {
-                editListener.editBook(selectedBookIsbn);
-            }
-        });
-        return button;
-    }
-
-    private JButton getDeleteButton() {
-        var button = new JButton("Delete");
-        button.setPreferredSize(new Dimension(0, 60));
-        button.addActionListener(_ -> {
-            if (deleteListener != null) {
-                deleteListener.deleteBook(selectedBookIsbn);
-            }
-        });
-        return button;
-    }
-
-     */
 }

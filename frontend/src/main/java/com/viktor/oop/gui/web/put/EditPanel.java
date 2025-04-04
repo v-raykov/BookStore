@@ -3,7 +3,7 @@ package com.viktor.oop.gui.web.put;
 import com.viktor.oop.gui.listener.RegimeListener;
 import com.viktor.oop.gui.main.Regime;
 import com.viktor.oop.gui.web.post.BookFormPanel;
-import com.viktor.oop.gui.web.post.CreateBookButtonPanel;
+import com.viktor.oop.gui.web.post.ButtonPanel;
 import com.viktor.oop.gui.web.post.CreateSinglePanel;
 import com.viktor.oop.model.Book;
 import com.viktor.oop.service.BookService;
@@ -13,19 +13,19 @@ import lombok.Setter;
 import javax.swing.*;
 import java.util.UUID;
 
-public class EditPane extends CreateSinglePanel {
+public class EditPanel extends CreateSinglePanel {
     private final BookService bookService;
     private final BookFormPanel bookFormPanel;
     private Book book;
     @Setter
     private RegimeListener regimeListener;
 
-    public EditPane() {
+    public EditPanel() {
         bookService = BookService.getInstance();
         bookFormPanel = getFormPanel();
     }
 
-    public void setBookId(UUID bookId) {
+    public void setBookById(UUID bookId) {
         book = bookService.getBooksByCriteria(bookId.toString(), SearchCriteria.ISBN).getFirst();
         bookFormPanel.getAuthorField().setText(book.getAuthor());
         bookFormPanel.getTitleField().setText(book.getTitle());
@@ -34,8 +34,8 @@ public class EditPane extends CreateSinglePanel {
     }
 
     @Override
-    protected CreateBookButtonPanel getButtonPanel() {
-        return new CreateBookButtonPanel() {
+    protected ButtonPanel getButtonPanel() {
+        return new ButtonPanel() {
             @Override
             protected JButton createButton() {
                 var button = new JButton("Edit");
